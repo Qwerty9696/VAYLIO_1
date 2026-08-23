@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VAYLIO — Prototype</title>
+<style>
+:root{
+  --bg:#0b0b10; --card:#15151d; --card2:#1c1c27; --text:#f7f6fb; --muted:#9694a5;
+  --accent1:#8f72ff; --accent2:#5b8cff; --line:rgba(255,255,255,.08);
+  --good:#65d6a2; --warn:#f2b866; --bad:#ff727c;
+}
+*{box-sizing:border-box} body{margin:0;background:#050507;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Arial,sans-serif}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+.app{max-width:430px;margin:auto;min-height:100vh;background:radial-gradient(700px 400px at 50% -10%,rgba(113,84,255,.25),transparent 55%),var(--bg);position:relative;overflow:hidden}
+.screen{display:none;min-height:100vh;padding:54px 20px 100px}.screen.active{display:block}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.brand{font-weight:800;letter-spacing:.22em;font-size:15px}.eyebrow{color:var(--muted);font-size:13px}
+h1{font-size:38px;line-height:1.02;margin:8px 0 12px;letter-spacing:-1.5px} h2{font-size:25px;margin:0 0 8px;letter-spacing:-.6px}
+p{color:var(--muted);line-height:1.5;margin:0}.hero{padding:10px 0 24px}
+.card{background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.22);margin:12px 0}
+.heroCard{padding:26px;min-height:205px;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(139,108,255,.28),rgba(69,105,255,.08) 55%,rgba(255,255,255,.035))}
+.heroCard:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-80px;top:-90px;background:radial-gradient(circle,rgba(155,126,255,.5),transparent 68%)}
+.icon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 10px 35px rgba(105,90,255,.35);font-size:24px;margin-bottom:30px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.stack{display:flex;flex-direction:column;gap:5px}
+.btn{width:100%;padding:16px 18px;border-radius:18px;background:linear-gradient(135deg,var(--accent1),var(--accent2));font-weight:700;margin-top:14px;box-shadow:0 12px 30px rgba(92,92,255,.25)}
+.btn.secondary{background:rgba(255,255,255,.07);box-shadow:none}.btn.small{width:auto;padding:10px 14px;margin:0;font-size:13px}
+.sectionTitle{margin:28px 0 10px;font-size:14px;color:#bdbbc8;font-weight:700}
+.doc{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}.doc:last-child{border:0}
+.thumb{width:48px;height:58px;border-radius:11px;background:linear-gradient(160deg,#eee,#bfc2ce);position:relative;flex:none}.thumb:before{content:"";position:absolute;left:9px;right:9px;top:14px;height:3px;background:#777}.thumb:after{content:"";position:absolute;left:9px;right:15px;top:23px;height:18px;border-top:3px solid #aaa;border-bottom:3px solid #aaa}
+.badge{font-size:11px;padding:6px 9px;border-radius:10px;background:rgba(255,110,120,.13);color:#ff9ba1}.muted{color:var(--muted)}
+.analysisHero{padding:22px;border-radius:25px;background:linear-gradient(145deg,rgba(112,91,255,.22),rgba(255,255,255,.035));border:1px solid var(--line);margin:16px 0}
+.pill{display:inline-flex;padding:7px 10px;border-radius:20px;background:rgba(101,214,162,.12);color:var(--good);font-size:12px;font-weight:700}
+.attention{border-left:3px solid var(--bad)}.attention.warn{border-left-color:var(--warn)}.attention.good{border-left-color:var(--good)}
+.source{font-size:12px;color:#858393;margin-top:10px}
+.chatBox{position:fixed;left:50%;transform:translateX(-50%);bottom:72px;width:min(390px,calc(100% - 40px));background:#1b1b25;border:1px solid var(--line);border-radius:18px;padding:13px 15px;color:#8e8c9b;z-index:3}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:70px;background:rgba(9,9,13,.92);backdrop-filter:blur(20px);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;z-index:4}.nav{background:none;color:#7f7d8d;font-size:11px;display:flex;flex-direction:column;gap:5px;align-items:center}.nav.active{color:white}.nav .ni{font-size:20px}
+.listItem{padding:18px 0;border-bottom:1px solid var(--line)}.listItem:last-child{border:0}
+.price{font-size:30px;font-weight:800;margin:14px 0 2px}.proGlow{background:linear-gradient(145deg,rgba(138,108,255,.3),rgba(71,103,255,.12));}
+.kicker{font-size:12px;color:#b8b5c6;text-transform:uppercase;letter-spacing:.12em;font-weight:700}
+.back{background:rgba(255,255,255,.07);border-radius:13px;width:38px;height:38px;font-size:18px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<section id="home" class="screen active">
+  <div class="top"><div class="brand">VAYLIO</div><div class="eyebrow">Good evening</div></div>
+  <div class="hero"><div class="kicker">Understand what matters.</div><h1>Your documents,<br>made clear.</h1><p>Scan something complex and get a simple, useful explanation in seconds.</p></div>
+  <div class="card heroCard">
+    <div class="icon">✦</div><h2>Understand a document</h2><p>Scan a paper or upload a PDF.</p>
+    <button class="btn" onclick="show('scan')">Scan document</button>
+    <button class="btn secondary" onclick="show('upload')">Upload a file</button>
+  </div>
+  <div class="sectionTitle">Recent documents</div>
+  <div class="card">
+    <div class="doc" onclick="show('analysis')"><div class="thumb"></div><div class="stack" style="flex:1"><b>Rental Agreement</b><span class="muted">Today · 14:32</span></div><span class="badge">3 important</span></div>
+    <div class="doc" onclick="show('analysis')"><div class="thumb"></div><div class="stack"><b>Insurance Letter</b><span class="muted">Yesterday · 09:18</span></div></div>
+  </div>
+</section>
+
+<section id="scan" class="screen">
+  <div class="top"><button class="back" onclick="show('home')">‹</button><div class="brand">SCAN</div><div style="width:38px"></div></div>
+  <div style="height:52vh;border-radius:30px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(145deg,#20202a,#0f0f15);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+    <div style="width:75%;height:70%;border:2px solid rgba(255,255,255,.65);border-radius:18px;box-shadow:0 0 0 999px rgba(0,0,0,.28)"></div>
+    <div style="position:absolute;bottom:22px;background:rgba(0,0,0,.45);padding:10px 14px;border-radius:14px;font-size:13px">Align document inside the frame</div>
+  </div>
+  <button class="btn" onclick="show('analysis')">Capture & analyze</button>
+  <button class="btn secondary" onclick="show('upload')">Choose from Photos</button>
+</section>
+
+<section id="upload" class="screen">
+  <div class="top"><button class="back" onclick="show('home')">‹</button><div class="brand">UPLOAD</div><div style="width:38px"></div></div>
+  <h1>Choose a document.</h1><p>PDFs and images work great.</p>
+  <div class="card" style="padding:34px;text-align:center;margin-top:28px">
+    <div class="icon" style="margin:0 auto 20px">↑</div><h2>Drop it here</h2><p>or select a file from your iPhone</p>
+    <button class="btn" onclick="show('analysis')">Select file</button>
+  </div>
+  <div class="card"><div class="row"><b>Document language</b><span class="muted">Auto-detect</span></div></div>
+</section>
+
+<section id="analysis" class="screen">
+  <div class="top"><button class="back" onclick="show('home')">‹</button><div class="brand">VAYLIO</div><button class="back" onclick="show('chat')">✦</button></div>
+  <div class="pill">✓ Analysis complete</div>
+  <div class="analysisHero"><div class="kicker">Rental Agreement · 8 pages</div><h2 style="margin-top:10px">Mostly straightforward.</h2><p>We've found <b style="color:white">3 things</b> worth your attention.</p></div>
+  <div class="sectionTitle">Things worth your attention</div>
+  <div class="card attention"><b>Early termination</b><p>Ending the agreement early may involve additional costs.</p><div class="source">Page 4 · Clause 8.2</div></div>
+  <div class="card attention warn"><b>Notice period</b><p>A 60-day notice period applies.</p><div class="source">Page 3 · Clause 6.1</div></div>
+  <div class="card attention good"><b>Deposit</b><p>Deposit conditions are clearly specified.</p><div class="source">Page 2 · Clause 4.3</div></div>
+  <div class="sectionTitle">Money</div>
+  <div class="card"><div class="row"><span>Monthly payment</span><b>€900</b></div><hr style="border:0;border-top:1px solid var(--line);margin:16px 0"><div class="row"><span>Deposit</span><b>€1,800</b></div></div>
+  <button class="btn" onclick="show('chat')">Ask about this document</button>
+</section>
+
+<section id="chat" class="screen">
+  <div class="top"><button class="back" onclick="show('analysis')">‹</button><div class="brand">ASK VAYLIO</div><div style="width:38px"></div></div>
+  <div class="analysisHero"><div class="kicker">Rental Agreement</div><h2>What can I help you understand?</h2></div>
+  <div class="card" onclick="answer('money')"><b>What can cost me money?</b></div>
+  <div class="card" onclick="answer('cancel')"><b>When can I cancel?</b></div>
+  <div class="card" onclick="answer('summary')"><b>Summarize this document</b></div>
+  <div id="answer" class="card" style="display:none"><div class="pill">Based on the document</div><p id="answerText" style="margin-top:12px;color:white"></p><div class="source">Source: Page 4 · Clause 8.2</div></div>
+  <div class="chatBox">Ask anything about this document…</div>
+</section>
+
+<section id="history" class="screen">
+  <div class="top"><div class="brand">HISTORY</div><button class="back" onclick="show('home')">⌕</button></div>
+  <h1>Your documents.</h1><p>Everything you've already understood.</p>
+  <div class="card">
+    <div class="listItem" onclick="show('analysis')"><div class="row"><div><b>Rental Agreement</b><div class="muted">8 pages · Today</div></div><span class="badge">3 important</span></div></div>
+    <div class="listItem" onclick="show('analysis')"><div class="row"><div><b>Insurance Letter</b><div class="muted">2 pages · Yesterday</div></div><span class="muted">›</span></div></div>
+    <div class="listItem"><div class="row"><div><b>Electricity Bill</b><div class="muted">1 page · Aug 16</div></div><span class="muted">›</span></div></div>
+  </div>
+</section>
+
+<section id="pro" class="screen">
+  <div class="top"><div class="brand">VAYLIO PRO</div></div>
+  <div class="card proGlow" style="padding:28px"><div class="kicker">Go further</div><h1 style="font-size:35px">Understand<br>everything.</h1><p>Unlock the full power of your documents.</p>
+    <div class="price">€9.99 <span class="muted" style="font-size:14px;font-weight:500">/ month</span></div>
+    <button class="btn">Start Pro</button>
+  </div>
+  <div class="card"><div class="listItem">✓ Extended document analysis</div><div class="listItem">✓ Ask unlimited questions</div><div class="listItem">✓ Compare documents</div><div class="listItem">✓ Large PDF analysis</div><div class="listItem">✓ Export to PDF</div><div class="listItem">✓ Smart reminders</div></div>
+  <p style="font-size:12px;text-align:center">Subscription terms would be shown here in the real app.</p>
+</section>
+
+<section id="profile" class="screen">
+  <div class="top"><div class="brand">PROFILE</div></div>
+  <div class="card"><div class="row"><div><h2>Alex</h2><p>alex@example.com</p></div><div class="pill">FREE</div></div></div>
+  <div class="sectionTitle">Preferences</div>
+  <div class="card"><div class="listItem"><div class="row"><b>App language</b><span class="muted">English ›</span></div></div><div class="listItem"><div class="row"><b>Answer language</b><span class="muted">English ›</span></div></div><div class="listItem"><div class="row"><b>Notifications</b><span class="muted">On ›</span></div></div></div>
+  <div class="sectionTitle">Account</div>
+  <div class="card"><div class="listItem">Manage subscription</div><div class="listItem">Privacy Policy</div><div class="listItem">Help & Support</div><div class="listItem" style="color:#ff8c95">Delete account</div></div>
+</section>
+
+<nav class="bottom">
+  <button class="nav active" data-nav="home" onclick="show('home')"><span class="ni">⌂</span>Home</button>
+  <button class="nav" data-nav="history" onclick="show('history')"><span class="ni">▤</span>History</button>
+  <button class="nav" data-nav="pro" onclick="show('pro')"><span class="ni">✦</span>Pro</button>
+  <button class="nav" data-nav="profile" onclick="show('profile')"><span class="ni">○</span>Profile</button>
+</nav>
+</div>
+<script>
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.nav===id));
+  window.scrollTo(0,0);
+}
+function answer(type){
+  const box=document.getElementById('answer'), t=document.getElementById('answerText');
+  const texts={
+    money:"The main potential costs are early termination and the €1,800 deposit. The agreement also allows additional charges in specific circumstances.",
+    cancel:"The agreement requires 60 days' notice. Early termination may involve additional costs. See the relevant clauses before making a decision.",
+    summary:"This is a 12-month rental agreement with €900 monthly rent and a €1,800 deposit. The most important point is the 60-day notice period."
+  };
+  t.textContent=texts[type]; box.style.display='block';
+}
+</script>
+<script>
+(function(){
+const L={en:"English",ru:"Русский",es:"Español",de:"Deutsch",fr:"Français"};
+const T={ru:{"Profile":"Профиль","Languages":"Языки","History":"История","Home":"Главная","Account":"Аккаунт","Notifications":"Уведомления","Appearance":"Внешний вид","Recent documents":"Последние документы","Your documents.":"Ваши документы.","New document":"+ Новый документ","Upload a file":"Загрузить файл","Scan document":"Сканировать документ","Good evening, Alex":"Добрый вечер, Alex","Understand what matters.":"Понимайте главное.","made clear.":"становятся понятными."},es:{"Profile":"Perfil","Languages":"Idiomas","History":"Historial","Home":"Inicio","Account":"Cuenta","Notifications":"Notificaciones","Appearance":"Apariencia","Recent documents":"Documentos recientes","Your documents.":"Tus documentos.","New document":"+ Nuevo documento","Upload a file":"Subir archivo","Scan document":"Escanear documento","Good evening, Alex":"Buenas noches, Alex","Understand what matters.":"Entiende lo importante.","made clear.":"más claros."},de:{"Profile":"Profil","Languages":"Sprachen","History":"Verlauf","Home":"Start","Account":"Konto","Notifications":"Benachrichtigungen","Appearance":"Darstellung","Recent documents":"Letzte Dokumente","Your documents.":"Deine Dokumente.","New document":"+ Neues Dokument","Upload a file":"Datei hochladen","Scan document":"Dokument scannen","Good evening, Alex":"Guten Abend, Alex","Understand what matters.":"Verstehe, was wichtig ist.","made clear.":"klar verständlich."},fr:{"Profile":"Profil","Languages":"Langues","History":"Historique","Home":"Accueil","Account":"Compte","Notifications":"Notifications","Appearance":"Apparence","Recent documents":"Documents récents","Your documents.":"Vos documents.","New document":"+ Nouveau document","Upload a file":"Importer un fichier","Scan document":"Scanner le document","Good evening, Alex":"Bonsoir, Alex","Understand what matters.":"Comprenez l’essentiel.","made clear.":"en toute simplicité."}};
+let lang=localStorage.getItem("vaylio_lang")||"en";
+function save(){localStorage.setItem("vaylio_lang",lang)}
+function tr(){let d=T[lang]||{};document.querySelectorAll("body *").forEach(e=>{if(!e.children.length&&!["SCRIPT","STYLE"].includes(e.tagName)){let k=e.textContent.trim();if(d[k])e.textContent=d[k]}});document.documentElement.lang=lang}
+function modal(title,body){let o=document.getElementById("vmodal");if(o)o.remove();let m=document.createElement("div");m.id="vmodal";m.style="position:fixed;inset:0;background:#0006;z-index:99999;display:flex;align-items:flex-end";m.innerHTML='<div style="background:white;width:100%;max-width:520px;margin:auto;border-radius:24px 24px 0 0;padding:24px;box-sizing:border-box"><div style="display:flex;justify-content:space-between"><b style="font-size:22px">'+title+'</b><button id="vx">×</button></div><div style="margin-top:18px">'+body+'</div></div>';document.body.appendChild(m);m.querySelector("#vx").onclick=()=>m.remove();return m}
+function langs(){let r=Object.entries(L).map(([c,n])=>`<button data-c="${c}" style="display:block;width:100%;padding:16px;border:0;border-bottom:1px solid #eee;background:white;text-align:left;font-size:17px">${n}${c===lang?" ✓":""}</button>`).join("");let m=modal(lang==="ru"?"Язык приложения":"App language",r);m.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{lang=b.dataset.c;save();location.reload()})}
+function account(){let m=modal(lang==="ru"?"Аккаунт":"Account",'<p>VAYLIO Beta</p><input id="vn" placeholder="Name" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px"><input id="ve" placeholder="Email" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin-top:8px"><button id="vs" style="width:100%;padding:14px;margin-top:10px;border:0;border-radius:12px;background:#111;color:white">Save</button>');m.querySelector("#vs").onclick=()=>{localStorage.setItem("vaylio_profile",JSON.stringify({name:m.querySelector("#vn").value,email:m.querySelector("#ve").value}));m.remove()}}
+function history(){let h=JSON.parse(localStorage.getItem("vaylio_history")||"[]");modal(lang==="ru"?"История":"History",h.length?h.map(x=>"<p><b>"+x.name+"</b><br><small>"+x.date+"</small></p>").join(""):"<p style='color:#888'>No documents yet.</p>")}
+function bind(){let M={"Languages":langs,"Языки":langs,"Idiomas":langs,"Sprachen":langs,"Langues":langs,"Profile":account,"Профиль":account,"Profil":account,"History":history,"История":history,"Historique":history,"Verlauf":history};document.querySelectorAll("body *").forEach(e=>{if(!e.children.length&&M[e.textContent.trim()])e.addEventListener("click",x=>{x.preventDefault();x.stopPropagation();M[e.textContent.trim()]()},true)})}
+document.addEventListener("DOMContentLoaded",()=>{tr();bind()});
+})();
+</script></body>
+</html>
